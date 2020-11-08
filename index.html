@@ -4,7 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Driving Log">
+    <meta name="apple-mobile-web-app-title" content="Peoplecott">
+    <link rel="manifest" href="manifest.json">
     <title>Peoplecott</title>
     <link rel="stylesheet" href="index.css">
     <meta name="description" content="Support brands that matter to you.">
@@ -20,7 +21,7 @@
 </head>
 <div id="info">
     <div class="container" id="infoContainer">
-        
+
     </div>
 </div>
 <div id="info-scrim" onclick="info.close()" hidden></div>
@@ -57,4 +58,19 @@
         }
     })
     document.getElementById("input").value=""
+    window.addEventListener('beforeinstallprompt', (event) => {
+  console.log('👍', 'beforeinstallprompt', event);
+  window.deferredPrompt = event;
+});
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed D:
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
 </script>
